@@ -24,15 +24,16 @@ function SexyLib:InitMinimap(addonName, iconPath)
     t:SetSize(21, 21)
     t:SetPoint("CENTER")
 
-    SexyLib:Util():AfterLogin(function()
-        SexyLib_Minimaps = SexyLib_Minimaps or {}
-        SexyLib_Minimaps[addonName] = SexyLib_Minimaps[addonName] or {}
-    end)
-
     local positionUpdater = function()
         if not SexyLib_Minimaps[addonName].pos then return end
         minimap:SetPoint('TOPLEFT', 'Minimap', 'TOPLEFT', 52 - 80 * cos(SexyLib_Minimaps[addonName].pos), 80 * sin(SexyLib_Minimaps[addonName].pos) - 52)
     end
+
+    SexyLib:Util():AfterLogin(function()
+        SexyLib_Minimaps = SexyLib_Minimaps or {}
+        SexyLib_Minimaps[addonName] = SexyLib_Minimaps[addonName] or {}
+        positionUpdater()
+    end)
 
     local minimapFrame = CreateFrame("FRAME", nil, minimap)
     minimapFrame:SetScript('OnUpdate', function()
