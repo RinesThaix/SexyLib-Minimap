@@ -1,5 +1,3 @@
-SexyLib_Minimaps = SexyLib_Minimaps or {}
-
 local minimaps = {}
 
 function SexyLib:InitMinimap(addonName, iconPath)
@@ -26,12 +24,14 @@ function SexyLib:InitMinimap(addonName, iconPath)
     t:SetSize(21, 21)
     t:SetPoint("CENTER")
 
-    SexyLib_Minimaps[addonName] = SexyLib_Minimaps[addonName] or {}
-    local data = SexyLib_Minimaps[addonName]
+    SexyLib:Util():AfterLogin(function()
+        SexyLib_Minimaps = SexyLib_Minimaps or {}
+        SexyLib_Minimaps[addonName] = SexyLib_Minimaps[addonName] or {}
+    end)
 
     local positionUpdater = function()
-        if not data.pos then return end
-        minimap:SetPoint('TOPLEFT', 'Minimap', 'TOPLEFT', 52 - 80 * cos(data.pos), 80 * sin(data.pos) - 52)
+        if not SexyLib_Minimaps[addonName].pos then return end
+        minimap:SetPoint('TOPLEFT', 'Minimap', 'TOPLEFT', 52 - 80 * cos(SexyLib_Minimaps[addonName].pos), 80 * sin(SexyLib_Minimaps[addonName].pos) - 52)
     end
 
     local minimapFrame = CreateFrame("FRAME", nil, minimap)
@@ -42,7 +42,7 @@ function SexyLib:InitMinimap(addonName, iconPath)
         xpos = xmin - xpos / UIParent:GetScale() + 70
         ypos = ypos / UIParent:GetScale() - ymin - 70
 
-        data.pos = math.deg(math.atan2(ypos, xpos))
+        SexyLib_Minimaps[addonName].pos = math.deg(math.atan2(ypos, xpos))
         positionUpdater()
     end)
     minimapFrame:Hide()
