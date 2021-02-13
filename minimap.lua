@@ -1,6 +1,6 @@
 local minimaps = {}
 
-function SexyLib:InitMinimap(addonName, iconPath)
+function SexyLib:InitMinimap(addonName, iconPath, atlasName, useAtlasSize, filterMode)
     local minimapTooltip = CreateFrame("GameTooltip", addonName .. "MinimapTooltip", UIParent, "GameTooltipTemplate")
     minimapTooltip:ClearLines()
     minimapTooltip:AddFontStrings(minimapTooltip:CreateFontString("$parentTextLeft1", nil, "GameTooltipText"), minimapTooltip:CreateFontString("$parentTextRight1", nil, "GameTooltipText"))
@@ -20,7 +20,11 @@ function SexyLib:InitMinimap(addonName, iconPath)
     t:SetPoint("TOPLEFT")
 
     t = minimap:CreateTexture(nil, "background")
-    t:SetTexture(iconPath or "Interface\\Icons\\inv_misc_head_dragon_red")
+    if atlasName == nil then
+        t:SetTexture(iconPath or "Interface\\Icons\\inv_misc_head_dragon_red")
+    else
+        t:SetAtlas(atlasName, useAtlasSize, filterMode)
+    end
     t:SetSize(21, 21)
     t:SetPoint("CENTER")
 

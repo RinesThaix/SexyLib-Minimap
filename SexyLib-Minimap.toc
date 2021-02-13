@@ -4,7 +4,7 @@
 ## Title: SexyLib |cFF00FF00Миникарта
 ## Notes-ruRu: Модуль значка у миникарты Sexy Lib
 ## Author: Konstantin Shandurenko
-## Version: 1.0.1
+## Version: 1.0.2
 ## RequiredDeps: SexyLib-Core
 ## SavedVariables: SexyLib_Minimaps
 
